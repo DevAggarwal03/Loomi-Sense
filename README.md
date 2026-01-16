@@ -1,3 +1,5 @@
+<img width="1920" height="1080" alt="Untitled" src="https://github.com/user-attachments/assets/7a10cc4d-1dac-4c80-bc4b-f333a50fa651" />
+
 # Loomis
 
 An Adobe Express add-on that allows users to quickly search for and insert memes/GIFs from Tenor directly into their designs. The add-on uses AI to understand images and suggest relevant search queries.
