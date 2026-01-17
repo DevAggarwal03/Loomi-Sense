@@ -109,7 +109,52 @@ Upload/Scan → AI analyzes → Show Suggestions (Phase 1) → Find Resources (P
 
 ---
 
-## v5 — Stickers + Multi-Tab
+## v5 — AI-Powered Segmented Suggestions & Multi-Source Assets
+
+**Status:** Implemented
+
+**Goal:** Reduce creative friction by analyzing user content and delivering structured, actionable inspiration with one-click canvas insertion.
+
+**Flow**
+Upload/Scan → AI analyzes → Segmented suggestions → Preview gallery → One-click insert → Expanded gallery
+
+### Features
+
+* **Enhanced Gemini Analysis (v5):**
+  * Structured JSON response with `analysis_summary` and `suggestions` array
+  * Segmented suggestions by element type (backgrounds, gifs, memes, illustrations, images)
+  * Each suggestion includes title, reason, and search keywords
+  * Optional user context input for theme/purpose
+
+* **Multi-Source Asset Integration:**
+  * **Tenor API**: GIFs and memes
+  * **Unsplash API**: Backgrounds, illustrations, and stock photos
+  * Centralized asset orchestration via `assetOrchestrator.js`
+
+* **Segmented UI:**
+  * Vertical list of suggestion cards
+  * Each card shows: title, reason, mini preview gallery (5 items), "+" add buttons, "More" button
+  * Expanded gallery view with pagination
+  * Custom search section for direct Tenor GIF search
+
+* **One-Click Insert:**
+  * Direct canvas insertion for all asset types
+  * Uses `addAnimatedImage()` for GIFs
+  * Uses `addImage()` for static images
+  * Unsplash download tracking
+
+### Architecture
+
+* `analyzeDesignV5()` function in `geminiService.js` - Enhanced Gemini Vision API integration
+* `assetOrchestrator.js` - Central hub for fetching assets from appropriate sources
+* `unsplashApi.js` - Unsplash API integration for photos/backgrounds/illustrations
+* `tenorApi.js` - Tenor API integration (enhanced from v1)
+* State-driven UI with multiple views: welcome, processing, suggestions, expanded
+* Element type mapping to data sources (SOURCE_MAP)
+
+---
+
+## v6 — Stickers + Multi-Tab
 
 **Goal:** Turn intent into creative components.
 
@@ -128,7 +173,7 @@ Upload/Scan → AI analyzes → Show Suggestions (Phase 1) → Find Resources (P
 
 ---
 
-## v6 — Illustrations
+## v7 — Illustrations Generation
 
 **Goal:** Enable creative generation.
 
@@ -180,6 +225,7 @@ Upload/Scan → AI analyzes → Show Suggestions (Phase 1) → Find Resources (P
 | v2      | Upload image → intent          | Implemented |
 | v3      | Add scan from canvas           | Implemented |
 | v4      | Enhanced analysis + suggestions| Implemented |
-| v5      | Stickers + Multi-Tab           | Planned     |
-| v6      | Illustrations                  | Planned     |
-| v7      | Polish                         | Planned     |
+| v5      | Segmented suggestions + multi-source assets | Implemented |
+| v6      | Stickers + Multi-Tab           | Planned     |
+| v7      | Illustrations Generation       | Planned     |
+| v8      | Product Polish                 | Planned     |

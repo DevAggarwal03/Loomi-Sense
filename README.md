@@ -1,148 +1,165 @@
-
-<img width="1311" height="734" alt="Screenshot 2026-01-17 at 7 06 53 AM" src="https://github.com/user-attachments/assets/8a965bb0-f35c-488b-9fb2-406d90e43c08" />
-
 # Loomis
 
-An Adobe Express add-on that allows users to quickly search for and insert memes/GIFs from Tenor directly into their designs. The add-on uses AI to understand images and suggest relevant search queries.
+<img width="1311" height="734" alt="Loomis Screenshot" src="https://github.com/user-attachments/assets/8a965bb0-f35c-488b-a48f-d48e9ce6024c" />
 
-## Features
+**Loomis** is an AI-powered Adobe Express add-on that analyzes your designs and provides intelligent, segmented suggestions for backgrounds, GIFs, memes, illustrations, and images. Simply scan your canvas or upload an image, and Loomis will suggest relevant assets that enhance your design.
 
-### Version 1 - Keyword Search (MVP)
+## ✨ Features
 
-- 🔍 Keyword-based meme/GIF search
-- 🖼️ Visual preview grid of search results
-- 🖱️ One-click insert GIFs into your document
-- ⚡ Fast and responsive UI
-- 🛡️ Error handling and graceful degradation
+### 🎨 AI-Powered Design Analysis
+- **Canvas Scanning**: Analyze your current Adobe Express canvas to get contextual suggestions
+- **Image Upload**: Upload images from your device for analysis
+- **User Context**: Provide optional context about your design's theme or purpose
+- **Gemini Vision API**: Advanced AI analysis powered by Google Gemini
 
-### Version 2 - Image Upload & AI Understanding
+### 🎯 Segmented Suggestions
+- **Organized by Element Type**: Suggestions are categorized into:
+  - 🖼️ **Backgrounds** - Textures, gradients, and abstract backgrounds
+  - ✨ **GIFs** - Animated content for engagement
+  - 😂 **Memes** - Humor and relatability
+  - 🎨 **Illustrations** - Artistic elements and graphics
+  - 📷 **Images** - Stock photos and realistic visuals
+- **Smart Explanations**: Each suggestion includes a reason why it helps your design
+- **Preview Gallery**: See 5 preview items per suggestion before expanding
 
-- 📤 Upload images from device
-- 🤖 AI-powered image analysis using Google Gemini
-- ✏️ Auto-filled search query (editable)
-- 🎯 Smart search suggestions based on image content
+### 🚀 Multi-Source Asset Integration
+- **Tenor API**: GIFs and memes
+- **Unsplash API**: High-quality stock photos, backgrounds, and illustrations
+- **One-Click Insert**: Add any asset directly to your canvas
+- **Expanded Galleries**: Click "More" to browse full galleries with pagination
 
-### Version 3 - Scan from Canvas
+### 🔍 Custom Search
+- **Direct GIF Search**: Search Tenor directly for specific GIFs
+- **Quick Access**: Available alongside AI suggestions
 
-- 📸 Scan current canvas as PNG
-- 🔍 AI analyzes canvas content
-- ✏️ Auto-filled search query with visual hint
-- 🎨 Seamless workflow: Scan → Edit → Search
-
-## Project Structure
+## 📁 Project Structure
 
 ```
-Loomis/
-├── v3/                    # Current version (v3 implementation)
+Loomi-Sense/
+├── loomis/                    # Main add-on code (v5.0.0)
 │   ├── src/
-│   │   ├── ui/            # UI runtime code
-│   │   │   ├── components/ # React/Lit components
-│   │   │   └── services/   # API services (Tenor, Gemini)
-│   │   ├── sandbox/        # Document sandbox runtime
-│   │   └── manifest.json   # Add-on manifest
-│   ├── docs/              # Version-specific documentation
-│   └── package.json
-├── docs/                   # Project documentation
-│   ├── requirements document MVP v1.md
-│   ├── requirements document MVP v2.md
-│   ├── requirements document MVP v3.md
-│   └── Tenor API Endpoints.md
-├── Versioning Document.md  # Version roadmap
-└── README.md              # This file
+│   │   ├── ui/                # UI runtime code
+│   │   │   ├── components/    # React/Lit components
+│   │   │   │   ├── App.js     # Main UI component
+│   │   │   │   └── App.css.js # Styles
+│   │   │   └── services/      # API services
+│   │   │       ├── geminiService.js      # Gemini Vision API
+│   │   │       ├── tenorApi.js          # Tenor API (GIFs/Memes)
+│   │   │       ├── unsplashApi.js       # Unsplash API (Images/Backgrounds)
+│   │   │       └── assetOrchestrator.js # Central asset fetching
+│   │   ├── sandbox/           # Document sandbox runtime
+│   │   │   └── code.js
+│   │   ├── index.html         # HTML template
+│   │   └── manifest.json      # Add-on manifest
+│   ├── package.json
+│   ├── webpack.config.js
+│   └── README.md              # Detailed setup guide
+├── docs/                      # Project documentation
+│   ├── requirements documwnt MVP v5.md  # v5 implementation plan
+│   └── EXPORT_CONTEXT.md      # Canvas export guide
+├── Versioning Document.md     # Version roadmap
+└── README.md                  # This file
 ```
 
-## Prerequisites
+## 🚀 Quick Start
 
-- Node.js 14+ and npm
-- Tenor API key ([Get one here](https://developers.google.com/tenor/guides/quickstart))
-- Google Gemini API key ([Get one here](https://ai.google.dev/))
-- Adobe Express account
+### Prerequisites
 
-## Setup
+- **Node.js** 14+ and npm
+- **Gemini API Key** - [Get one here](https://aistudio.google.com/app/apikey)
+- **Unsplash API Key** - [Get one here](https://unsplash.com/developers)
+- **Tenor API Key** (optional) - [Get one here](https://developers.google.com/tenor/guides/quickstart)
+- **Adobe Express** account
 
-### 1. Install Dependencies
+### Installation
 
-```bash
-cd v3
-npm install
-```
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd Loomi-Sense
+   ```
 
-### 2. Configure API Keys
+2. **Install dependencies**
+   ```bash
+   cd loomis
+   npm install
+   ```
 
-Create a `.env` file in the `v3/` directory:
+3. **Configure API Keys**
 
-```bash
-cd v3
-cp .env.example .env
-```
+   Create a `.env` file in the `loomis/` directory:
+   ```bash
+   cd loomis
+   touch .env
+   ```
 
-Edit `.env` and add your API keys:
+   Add your API keys:
+   ```env
+   # Required - Gemini API Key for image analysis
+   GEMINI_API_KEY=your_gemini_api_key_here
 
-```env
-TENOR_API_KEY=your_tenor_api_key_here
-GEMINI_API_KEY=your_gemini_api_key_here
-```
+   # Required - Unsplash API Key for backgrounds, illustrations, images
+   UNSPLASH_ACCESS_KEY=your_unsplash_access_key_here
 
-**Note**: The `.env` file is gitignored and will not be committed to version control.
+   # Optional - Tenor API Key (a default key is provided for development)
+   TENOR_API_KEY=your_tenor_api_key_here
+   ```
 
-### 3. Build the Add-on
+   **Note**: The `.env` file is gitignored and will not be committed to version control.
 
-```bash
-cd v3
-npm run build
-```
+4. **Build the add-on**
+   ```bash
+   npm run build
+   ```
 
-### 4. Start Development Server
+5. **Start development server**
+   ```bash
+   npm run start
+   ```
 
-```bash
-cd v3
-npm run start
-```
+   The add-on will be served at `http://localhost:3000` (or the port shown in the terminal).
 
-The add-on will be served at `https://localhost:5241` for development.
+6. **Load in Adobe Express**
+   - Open [Adobe Express](https://express.adobe.com)
+   - Create or open a document
+   - Go to **Add-ons** panel
+   - Click **"Load Add-on"** and enter your local development URL
+   - The Loomis add-on should appear in your panel
 
-### 5. Load Add-on in Adobe Express
+## 📖 Usage
 
-1. Open [Adobe Express](https://express.adobe.com)
-2. Create or open a document
-3. Go to Add-ons panel
-4. Click "Load Add-on" and enter: `https://localhost:5241`
-5. Accept the SSL certificate warning (development only)
-6. The Loomis add-on should appear in your panel
-
-## Usage
-
-### Basic Search (v1)
-
-1. Enter a search term in the text field (e.g., "excited", "happy", "reaction")
-2. Click "Search" or press Enter
-3. Browse the results in the grid
-4. Click "Add to Document" on any GIF to insert it into your design
-
-### Upload & Analyze (v2)
-
-1. Click "Upload from Device" button
-2. Select an image file (JPEG, PNG, GIF, or WebP)
-3. The AI analyzes the image and auto-fills the search box
-4. Edit the search query if needed
-5. Click "Search" to find relevant GIFs
-
-### Scan from Canvas (v3)
+### Scan Your Canvas
 
 1. Create or open a document in Adobe Express
 2. Add some content to the canvas
-3. Click "Scan from Canvas" button
-4. The current page is captured and analyzed by AI
-5. The search box auto-fills with a suggested query (highlighted in blue)
-6. Edit the search query if needed
-7. Click "Search" to find relevant GIFs
+3. Click **"✨ Scan my Canvas"** button in the Loomis panel
+4. Wait for AI analysis (typically 2-5 seconds)
+5. Browse segmented suggestions organized by element type
+6. Click **"+"** on any thumbnail to add it to your canvas
+7. Click **"More"** to see a full gallery for any category
 
-## Development
+### Upload an Image
 
-### Development Commands
+1. Click **"Import from Device"** button
+2. Select an image file (JPEG, PNG, GIF, or WebP, max 10MB)
+3. Optionally provide context in the "What's the theme about?" field
+4. Browse AI-generated suggestions
+5. Add assets to your canvas with one click
+
+### Custom Search
+
+1. Scroll to the custom search section
+2. Enter a search query (e.g., "excited", "happy", "reaction")
+3. Click **"Go"** or press Enter
+4. Browse Tenor GIF results
+5. Click **"+"** to add any GIF to your canvas
+
+## 🛠️ Development
+
+### Available Commands
 
 ```bash
-cd v3
+cd loomis
 
 # Start development server with hot reload
 npm run start
@@ -152,137 +169,136 @@ npm run build
 
 # Clean build artifacts
 npm run clean
+
+# Package for distribution
+npm run package
 ```
 
-The development server runs on `https://localhost:5241` with hot reload enabled.
+### Project Architecture
 
-## Configuration
+This is a **frontend-only** add-on. All functionality runs in the browser:
+
+- **No backend server required** - All API calls are made directly from the browser
+- **Direct API integration** - Tenor, Unsplash, and Gemini APIs are called client-side
+- **Canvas export** - Uses Adobe Express SDK to export canvas as PNG
+- **Client-side processing** - Image processing and analysis happen in the browser
+
+### Key Technologies
+
+- **Spectrum Web Components** - Adobe's design system components
+- **Lit** - Web components framework
+- **Gemini Vision API** - AI image analysis (v5)
+- **Tenor API** - GIF and meme search
+- **Unsplash API** - Stock photos, backgrounds, illustrations
+- **Adobe Express Add-on SDK** - Integration with Adobe Express
+- **Webpack** - Build tool
+
+## 🔧 Configuration
 
 ### Environment Variables
 
-The add-on requires two API keys configured in `v3/.env`:
+The add-on requires API keys configured in `loomis/.env`:
 
-```env
-TENOR_API_KEY=your_tenor_api_key_here
-GEMINI_API_KEY=your_gemini_api_key_here
-```
+| Variable | Required | Purpose | Get Key |
+|----------|----------|---------|---------|
+| `GEMINI_API_KEY` | Yes | AI image analysis | [Google AI Studio](https://aistudio.google.com/app/apikey) |
+| `UNSPLASH_ACCESS_KEY` | Yes | Photos, backgrounds, illustrations | [Unsplash Developers](https://unsplash.com/developers) |
+| `TENOR_API_KEY` | No* | GIFs and memes | [Tenor API](https://developers.google.com/tenor/guides/quickstart) |
 
-**Tenor API Key**: Used for searching and retrieving GIFs
+*A default Tenor key is included for development, but you should use your own for production.
 
-- Get one at: https://developers.google.com/tenor/guides/quickstart
+### API Rate Limits
 
-**Gemini API Key**: Used for AI-powered image analysis (v2 & v3)
+- **Gemini**: Varies by plan (free tier available)
+- **Unsplash**: 50 requests/hour (demo mode), higher limits available
+- **Tenor**: Free tier available with generous limits
 
-- Get one at: https://ai.google.dev/
-
-## Building for Production
-
-```bash
-cd v3
-npm run build
-```
-
-The built files will be in `v3/dist/`. Package this directory as a zip file for distribution or deployment.
-
-**Note**: This is a frontend-only add-on. All API calls are made directly from the browser. No backend server is required.
-
-## Troubleshooting
+## 🐛 Troubleshooting
 
 ### Add-on Not Loading
 
-1. Check that the development server is running on `https://localhost:5241`
+1. Check that the development server is running
 2. Verify the URL in Adobe Express matches your local server
-3. Accept the SSL certificate warning in your browser (development only)
-4. Check browser console for errors
-
-### SSL Certificate Issues
-
-If you see SSL certificate warnings:
-
-```bash
-cd v3
-npx @adobe/ccweb-add-on-ssl setup --hostname localhost
-```
+3. Check browser console for errors
+4. Ensure all API keys are correctly set in `.env`
 
 ### API Errors
 
-1. **Tenor API Errors**:
+**Gemini API Errors:**
+- Verify your `GEMINI_API_KEY` is correct in `.env`
+- Check API quota limits
+- Ensure the API key has access to Gemini Vision models
 
-   - Verify your `TENOR_API_KEY` is correct in `.env`
-   - Check API quota limits
-   - Ensure the API key has proper permissions
+**Unsplash API Errors:**
+- Verify your `UNSPLASH_ACCESS_KEY` is correct
+- Check rate limits (50 req/hr for demo mode)
+- Ensure proper API key format
 
-2. **Gemini API Errors**:
+**Tenor API Errors:**
+- Verify your `TENOR_API_KEY` is correct (or using default)
+- Check API quota limits
 
-   - Verify your `GEMINI_API_KEY` is correct in `.env`
-   - Check API quota limits
-   - Ensure the API key has access to the Gemini model
+### Canvas Export Errors
 
-3. **Canvas Export Errors**:
-   - Ensure you have content on the canvas before scanning
-   - Check that Adobe Express SDK is properly initialized
-   - Verify browser console for detailed error messages
+- Ensure you have content on the canvas before scanning
+- Check that Adobe Express SDK is properly initialized
+- Verify browser console for detailed error messages
 
 ### Build Errors
 
 1. Clear `node_modules` and reinstall:
-
    ```bash
-   cd v3
+   cd loomis
    rm -rf node_modules package-lock.json
    npm install
    ```
 
 2. Clean build artifacts:
    ```bash
-   cd v3
+   cd loomis
    npm run clean
    npm run build
    ```
 
-## Version History
+## 📚 Documentation
 
-### Version 1 (MVP) - Keyword Search
+- **[loomis/README.md](./loomis/README.md)** - Detailed setup and development guide
+- **[Versioning Document.md](./Versioning%20Document.md)** - Version roadmap and history
+- **[docs/EXPORT_CONTEXT.md](./docs/EXPORT_CONTEXT.md)** - Canvas export implementation guide
+- **[docs/requirements documwnt MVP v5.md](./docs/requirements%20documwnt%20MVP%20v5.md)** - v5 implementation plan
 
-- Basic keyword-based GIF search
-- Visual preview grid
-- One-click insertion into documents
-- Error handling and empty states
+## 📝 Version History
 
-### Version 2 - Image Upload & AI Understanding
+### Version 5.0.0 (Current)
+- ✨ AI-powered segmented suggestions
+- 🎯 Multi-source assets (Tenor + Unsplash)
+- 🔍 Custom search functionality
+- 📱 One-click insert for all asset types
+- 🎨 Enhanced UI with expanded galleries
 
-- Image upload from device
-- AI-powered image analysis using Google Gemini
-- Auto-filled search queries (editable)
-- Smart search suggestions based on image content
+### Version 4.0.0
+- Two-phase UI with suggestions and resources
+- Enhanced Gemini analysis
 
-### Version 3 - Scan from Canvas
+### Version 3.0.0
+- Canvas scanning with Gemini analysis
 
-- Scan current canvas as PNG
-- AI analyzes canvas content
-- Auto-filled search query with visual hint
-- Seamless workflow integration
+### Version 2.0.0
+- Image upload with OCR
 
-See [Versioning Document.md](./Versioning Document.md) for the complete roadmap.
+### Version 1.0.0
+- Basic GIF search and insert
 
-## Technologies
+See [Versioning Document.md](./Versioning%20Document.md) for the complete roadmap.
 
-- **Spectrum Web Components** - UI components (Adobe Design System)
-- **Lit** - Web components framework
-- **Tenor API** - GIF search provider
-- **Google Gemini API** - AI image analysis (v2 & v3)
-- **Adobe Express Add-on SDK** - Integration with Adobe Express
-- **Webpack** - Build tool
+## 🤝 Contributing
 
-## Architecture
+This project is currently in active development. For questions or issues, please open an issue on the repository.
 
-This is a **frontend-only** add-on. All functionality runs in the browser:
-
-- No backend server required
-- Direct API calls to Tenor and Gemini from the browser
-- Canvas export using Adobe Express SDK
-- Client-side image processing and analysis
-
-## License
+## 📄 License
 
 MIT
+
+---
+
+**Built with ❤️ for Adobe Express**
